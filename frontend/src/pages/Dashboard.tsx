@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/Sidebar";
 import { useExpense } from "../hooks/useFinance";
 import { useIncome } from "../hooks/useFinance";
 import "./Dashboard.css";
@@ -28,15 +28,21 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const { expenses, fetchExpenses } = useExpense();
-  const { incomes, fetchIncomes } = useIncome();
+  const { expenses, fetchExpenses, error: expenseError } = useExpense();
+  const { incomes, fetchIncomes, error: incomeError } = useIncome();
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("No token found - redirecting to login");
+      window.location.href = "/";
+      return;
+    }
     fetchExpenses();
     fetchIncomes();
-  }, []);
+  }, [fetchExpenses, fetchIncomes]);
 
   useEffect(() => {
     const incomeSum = incomes.reduce((sum, item) => sum + (item.amount || 0), 0);
@@ -90,11 +96,11 @@ const Dashboard = () => {
         <div className="summary-cards">
           <div className="card income-card">
             <h3>Income</h3>
-            <p>${totalIncome}</p>
+            <p>Rs {totalIncome}</p>
           </div>
           <div className="card expense-card">
             <h3>Expenses</h3>
-            <p>${totalExpenses}</p>
+            <p>Rs {totalExpenses}</p>
           </div>
         </div>
 

@@ -80,8 +80,12 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // Fetch expenses on mount if token exists
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    const token = localStorage.getItem("token");
+    if (token) {
       fetchExpenses();
+    } else {
+      console.warn("No token found - user may not be logged in");
+      setError("Please login to view expenses");
     }
   }, [fetchExpenses]);
 

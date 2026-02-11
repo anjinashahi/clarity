@@ -16,6 +16,8 @@ const apiCall = async <T = any>(
 
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
+  } else {
+    console.warn(`No token available for ${method} ${endpoint}`);
   }
 
   const options: RequestInit = {
@@ -27,13 +29,26 @@ const apiCall = async <T = any>(
     options.body = JSON.stringify(body);
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
 
-  if (!response.ok) {
-    throw new Error(`API error: ${response.statusText}`);
+    if (response.status === 401) {
+      // Token expired or invalid - clear it
+      localStorage.removeItem("token");
+      window.location.href = "/";
+      throw new Error("Session expired. Please login again.");
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ message: response.statusText }));
+      throw new Error(errorData.message || errorData.msg || `API error: ${response.statusText}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error(`API Error [${method} ${endpoint}]:`, error);
+    throw error;
   }
-
-  return response.json();
 };
 
 // Auth response type

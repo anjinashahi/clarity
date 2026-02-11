@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Navbar from "../components/sidebar";
+import Navbar from "../components/Sidebar";
 import { useIncome } from "../hooks/useFinance";
 import "./AddIncome.css";
 
 const AddIncome: React.FC = () => {
-  const { incomes, loading, error, addIncome, deleteIncome } = useIncome();
+  const { incomes, loading, error, addIncome, updateIncome, deleteIncome } = useIncome();
 
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("Salary");
@@ -16,6 +16,7 @@ const AddIncome: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,15 +25,36 @@ const AddIncome: React.FC = () => {
 
     setSubmitting(true);
     try {
-      await addIncome(Number(amount), category, date, description);
+      if (editingId) {
+        await updateIncome(editingId, Number(amount), category, date, description);
+        setEditingId(null);
+      } else {
+        await addIncome(Number(amount), category, date, description);
+      }
       setAmount("");
       setDate("");
       setDescription("");
     } catch (err) {
-      console.error("Failed to add income:", err);
+      console.error("Failed to save income:", err);
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleEdit = (income: any) => {
+    setEditingId(income._id);
+    setAmount(income.amount.toString());
+    setCategory(income.category);
+    setDate(income.date.split("T")[0]); // Format date for input
+    setDescription(income.description || "");
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setAmount("");
+    setDate("");
+    setDescription("");
+    setCategory("Salary");
   };
 
   const handleAddCategory = () => {
@@ -49,7 +71,7 @@ const AddIncome: React.FC = () => {
       <Navbar />
 
       <div className="content">
-        <h2>Add Income</h2>
+        <h2>{editingId ? "Edit Income" : "Add Income"}</h2>
 
         {/* FORM */}
         <form className="form-card" onSubmit={handleSubmit}>
@@ -109,8 +131,18 @@ const AddIncome: React.FC = () => {
           </div>
 
           <button className="submit-btn" disabled={submitting}>
-            {submitting ? "Adding..." : "Add Income"}
+            {submitting ? (editingId ? "Updating..." : "Adding...") : (editingId ? "Update Income" : "Add Income")}
           </button>
+          {editingId && (
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={handleCancel}
+              style={{ marginLeft: "10px" }}
+            >
+              Cancel Edit
+            </button>
+          )}
         </form>
 
         {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
@@ -141,6 +173,13 @@ const AddIncome: React.FC = () => {
                     <td>{new Date(item.date).toLocaleDateString()}</td>
                     <td>{item.description || "-"}</td>
                     <td>
+                      <button
+                        className="submit-btn"
+                        onClick={() => handleEdit(item)}
+                        style={{ padding: "5px 10px", fontSize: "12px", marginRight: "5px" }}
+                      >
+                        Edit
+                      </button>
                       <button
                         className="cancel-btn"
                         onClick={() => deleteIncome(item._id)}

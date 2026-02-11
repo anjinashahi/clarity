@@ -7,6 +7,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import AddIncome from "./pages/addIncome";
 import AddExpense from "./pages/addExpense";
+import History from "./pages/History";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/add-income" element = {<AddIncome />} />
             <Route path="/add-expense" element = {<AddExpense />} />
+            <Route path="/history" element={<History />} />
           </Routes>
         </IncomeProvider>
       </ExpenseProvider>

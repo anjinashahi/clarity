@@ -80,8 +80,12 @@ export const IncomeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   // Fetch incomes on mount if token exists
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    const token = localStorage.getItem("token");
+    if (token) {
       fetchIncomes();
+    } else {
+      console.warn("No token found - user may not be logged in");
+      setError("Please login to view incomes");
     }
   }, [fetchIncomes]);
 

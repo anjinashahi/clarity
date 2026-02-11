@@ -4,7 +4,7 @@ import { useExpense } from "../hooks/useFinance";
 import "./AddIncome.css"; // Reusing same styling
 
 const AddExpense: React.FC = () => {
-  const { expenses, loading, error, addExpense, deleteExpense } = useExpense();
+  const { expenses, loading, error, addExpense, updateExpense, deleteExpense } = useExpense();
 
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("Food");
@@ -21,6 +21,7 @@ const AddExpense: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,15 +30,36 @@ const AddExpense: React.FC = () => {
 
     setSubmitting(true);
     try {
-      await addExpense(Number(amount), category, date, description);
+      if (editingId) {
+        await updateExpense(editingId, Number(amount), category, date, description);
+        setEditingId(null);
+      } else {
+        await addExpense(Number(amount), category, date, description);
+      }
       setAmount("");
       setDate("");
       setDescription("");
     } catch (err) {
-      console.error("Failed to add expense:", err);
+      console.error("Failed to save expense:", err);
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleEdit = (expense: any) => {
+    setEditingId(expense._id);
+    setAmount(expense.amount.toString());
+    setCategory(expense.category);
+    setDate(expense.date.split("T")[0]); // Format date for input
+    setDescription(expense.description || "");
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setAmount("");
+    setDate("");
+    setDescription("");
+    setCategory("Food");
   };
 
   const handleAddCategory = () => {
@@ -54,7 +76,7 @@ const AddExpense: React.FC = () => {
       <Navbar />
 
       <div className="content">
-        <h2>Add Expense</h2>
+        <h2>{editingId ? "Edit Expense" : "Add Expense"}</h2>
 
         {/* FORM */}
         <form className="form-card" onSubmit={handleSubmit}>
@@ -114,8 +136,18 @@ const AddExpense: React.FC = () => {
           </div>
 
           <button className="submit-btn" disabled={submitting}>
-            {submitting ? "Adding..." : "Add Expense"}
+            {submitting ? (editingId ? "Updating..." : "Adding...") : (editingId ? "Update Expense" : "Add Expense")}
           </button>
+          {editingId && (
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={handleCancel}
+              style={{ marginLeft: "10px" }}
+            >
+              Cancel Edit
+            </button>
+          )}
         </form>
 
         {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
@@ -146,6 +178,13 @@ const AddExpense: React.FC = () => {
                     <td>{new Date(item.date).toLocaleDateString()}</td>
                     <td>{item.description || "-"}</td>
                     <td>
+                      <button
+                        className="submit-btn"
+                        onClick={() => handleEdit(item)}
+                        style={{ padding: "5px 10px", fontSize: "12px", marginRight: "5px" }}
+                      >
+                        Edit
+                      </button>
                       <button
                         className="cancel-btn"
                         onClick={() => deleteExpense(item._id)}
