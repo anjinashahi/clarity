@@ -1,11 +1,13 @@
 // src/components/Sidebar.tsx
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDarkMode } from "../context/DarkModeContext";
 import "./Sidebar.css";
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   const menuItems = [
     { name: "Dashboard", path: "/dashboard" },
@@ -33,9 +35,14 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <button className="logout-btn" onClick={handleLogout}>
-        Logout
-      </button>
+      <div className="sidebar-footer">
+        <button className="theme-toggle-btn" onClick={toggleDarkMode} title={isDarkMode ? "Light Mode" : "Dark Mode"}>
+          {isDarkMode ? "☀️" : "🌙"}
+        </button>
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
     </nav>
   );
 };

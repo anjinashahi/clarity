@@ -11,6 +11,11 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   height: 100vh;
   overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+:root.dark-mode body {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 }
 
 .auth-container {
@@ -33,6 +38,11 @@ body {
   transition: all 0.3s ease;
 }
 
+:root.dark-mode .auth-card {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(71, 85, 105, 0.5);
+}
+
 .auth-card:hover {
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
 }
@@ -48,6 +58,12 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  transition: all 0.3s ease;
+}
+
+:root.dark-mode .auth-title {
+  color: #e2e8f0;
+}
 }
 
 .tabs {
@@ -69,6 +85,11 @@ body {
   transition: all 0.3s ease;
   font-weight: 600;
   font-size: 15px;
+}
+
+:root.dark-mode .tabs button {
+  background: #334155;
+  color: #cbd5e1;
 }
 
 .tabs button.active {
@@ -117,14 +138,71 @@ body {
   transition: all 0.3s ease;
 }
 
+:root.dark-mode .form input {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
 .form input:focus {
   border-color: #667eea;
   box-shadow: 0 0 12px rgba(102, 126, 234, 0.2);
   background: white;
 }
 
+:root.dark-mode .form input:focus {
+  background: #0f172a;
+  box-shadow: 0 0 12px rgba(102, 126, 234, 0.3);
+}
+
 .form input::placeholder {
   color: #94a3b8;
+}
+
+:root.dark-mode .form input::placeholder {
+  color: #64748b;
+}
+
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field input {
+  width: 100%;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #94a3b8;
+}
+
+:root.dark-mode .password-toggle {
+  color: #64748b;
+}
+
+.password-toggle:hover {
+  color: #667eea;
+  transform: scale(1.1);
+}
+
+:root.dark-mode .password-toggle:hover {
+  color: #6366f1;
+}
+
+.password-toggle:active {
+  transform: scale(0.95);
 }
 
 .form button {

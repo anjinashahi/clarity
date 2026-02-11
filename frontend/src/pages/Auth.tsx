@@ -12,11 +12,13 @@ const Auth = () => {
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   // Register form state
   const [registerName, setRegisterName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,13 +86,23 @@ const Auth = () => {
               onChange={(e) => setLoginEmail(e.target.value)}
               required
             />
-            <input
-              type="password"
-              placeholder="Password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-              required
-            />
+            <div className="password-field">
+              <input
+                type={showLoginPassword ? "text" : "password"}
+                placeholder="Password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowLoginPassword(!showLoginPassword)}
+                title={showLoginPassword ? "Hide password" : "Show password"}
+              >
+                {showLoginPassword ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
             <button type="submit" disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </button>
@@ -114,13 +126,23 @@ const Auth = () => {
               onChange={(e) => setRegisterEmail(e.target.value)}
               required
             />
-            <input
-              type="password"
-              placeholder="Password"
-              value={registerPassword}
-              onChange={(e) => setRegisterPassword(e.target.value)}
-              required
-            />
+            <div className="password-field">
+              <input
+                type={showRegisterPassword ? "text" : "password"}
+                placeholder="Password"
+                value={registerPassword}
+                onChange={(e) => setRegisterPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowRegisterPassword(!showRegisterPassword)}
+                title={showRegisterPassword ? "Hide password" : "Show password"}
+              >
+                {showRegisterPassword ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
             <button type="submit" disabled={loading}>
               {loading ? "Registering..." : "Register"}
             </button>

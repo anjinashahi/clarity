@@ -3,6 +3,11 @@
   gap: 1rem;
   margin: 2rem 0;
   border-bottom: 2px solid #e0e0e0;
+  transition: border-color 0.3s ease;
+}
+
+:root.dark-mode .history-tabs {
+  border-bottom-color: #334155;
 }
 
 .filters {
@@ -15,6 +20,12 @@
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+:root.dark-mode .filters {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .filter-group {
@@ -31,6 +42,11 @@
   color: #555;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .filter-group label {
+  color: #cbd5e1;
 }
 
 .filter-select,
@@ -46,15 +62,32 @@
   outline: none;
 }
 
+:root.dark-mode .filter-select,
+:root.dark-mode .filter-input {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
 .filter-select:hover,
 .filter-input:hover {
   border-color: #4f46e5;
+}
+
+:root.dark-mode .filter-select:hover,
+:root.dark-mode .filter-input:hover {
+  border-color: #6366f1;
 }
 
 .filter-select:focus,
 .filter-input:focus {
   border-color: #4f46e5;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+:root.dark-mode .filter-select:focus,
+:root.dark-mode .filter-input:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 .reset-btn {
@@ -72,9 +105,17 @@
   letter-spacing: 0.5px;
 }
 
+:root.dark-mode .reset-btn {
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+
 .reset-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+:root.dark-mode .reset-btn:hover {
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
 }
 
 .reset-btn:active {
@@ -98,13 +139,26 @@
   bottom: -2px;
 }
 
+:root.dark-mode .tab-btn {
+  color: #94a3b8;
+}
+
 .tab-btn:hover {
   color: #333;
+}
+
+:root.dark-mode .tab-btn:hover {
+  color: #cbd5e1;
 }
 
 .tab-btn.active {
   color: #4f46e5;
   border-bottom-color: #4f46e5;
+}
+
+:root.dark-mode .tab-btn.active {
+  color: #6366f1;
+  border-bottom-color: #6366f1;
 }
 
 .tab-icon {
@@ -118,12 +172,23 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 2rem;
   overflow-x: auto;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+:root.dark-mode .table-container {
+  background: #0f172a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .table-container h3 {
   margin: 0 0 1.5rem 0;
   color: #333;
   font-size: 1.25rem;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .table-container h3 {
+  color: #e2e8f0;
 }
 
 .history-table {
@@ -136,6 +201,11 @@
   border-bottom: 2px solid #e0e0e0;
 }
 
+:root.dark-mode .history-table thead {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-bottom-color: #334155;
+}
+
 .history-table th {
   padding: 1rem;
   text-align: left;
@@ -144,6 +214,11 @@
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .history-table th {
+  color: #cbd5e1;
 }
 
 .history-table tbody tr {
@@ -151,14 +226,27 @@
   transition: background-color 0.2s ease;
 }
 
+:root.dark-mode .history-table tbody tr {
+  border-bottom-color: #334155;
+}
+
 .history-table tbody tr:hover {
   background-color: #f9f9fc;
+}
+
+:root.dark-mode .history-table tbody tr:hover {
+  background-color: #1e293b;
 }
 
 .history-table td {
   padding: 1.25rem 1rem;
   color: #666;
   vertical-align: middle;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .history-table td {
+  color: #cbd5e1;
 }
 
 .category-badge {
@@ -193,6 +281,11 @@
 .description {
   color: #999;
   font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .description {
+  color: #64748b;
 }
 
 .error-message {
@@ -202,12 +295,23 @@
   border-radius: 8px;
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+:root.dark-mode .error-message {
+  background: linear-gradient(135deg, #7f1d1d 0%, #5f0f0f 100%);
+  color: #fca5a5;
 }
 
 .empty-state {
   text-align: center;
   padding: 3rem 2rem;
   color: #999;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .empty-state {
+  color: #64748b;
 }
 
 .empty-state p {
@@ -220,6 +324,11 @@
   padding: 2rem;
   color: #999;
   font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .loading-text {
+  color: #64748b;
 }
 
 /* Responsive design */

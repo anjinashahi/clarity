@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Sidebar";
 import { useIncome } from "../hooks/useFinance";
+import ConfirmModal from "../components/ConfirmModal";
 import "./AddIncome.css";
 
 const AddIncome: React.FC = () => {
@@ -8,7 +9,17 @@ const AddIncome: React.FC = () => {
 
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("Salary");
-  const [categories, setCategories] = useState(["Salary", "Freelance", "Gift"]);
+  const [draftCategories, setDraftCategories] = useState<string[]>([]);
+  
+  // Get categories from saved incomes + draft categories
+  const dbCategories = Array.from(new Set(
+    incomes.map(income => income.category).filter(cat => cat)
+  )).length > 0 
+    ? Array.from(new Set(incomes.map(income => income.category)))
+    : ["Salary", "Freelance", "Gift"];
+  
+  // Combine database categories with draft ones
+  const categories = Array.from(new Set([...dbCategories, ...draftCategories]));
 
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
@@ -17,6 +28,10 @@ const AddIncome: React.FC = () => {
   const [newCategory, setNewCategory] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+
+  // Confirmation modal states
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +75,12 @@ const AddIncome: React.FC = () => {
   const handleAddCategory = () => {
     if (!newCategory) return;
 
-    setCategories([...categories, newCategory]);
+    // Add to draft categories so it shows in dropdown
+    if (!categories.includes(newCategory)) {
+      setDraftCategories([...draftCategories, newCategory]);
+    }
+    // Set the category and close popup
+    // The category will be saved with the income record to database
     setCategory(newCategory);
     setNewCategory("");
     setShowPopup(false);
@@ -182,7 +202,10 @@ const AddIncome: React.FC = () => {
                       </button>
                       <button
                         className="cancel-btn"
-                        onClick={() => deleteIncome(item._id)}
+                        onClick={() => {
+                          setDeleteTargetId(item._id);
+                          setShowDeleteConfirm(true);
+                        }}
                         style={{ padding: "5px 10px", fontSize: "12px" }}
                       >
                         Delete
@@ -224,6 +247,27 @@ const AddIncome: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showDeleteConfirm}
+        title="Delete Income"
+        message="Are you sure you want to delete this income record? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={() => {
+          if (deleteTargetId) {
+            deleteIncome(deleteTargetId);
+            setShowDeleteConfirm(false);
+            setDeleteTargetId(null);
+          }
+        }}
+        onCancel={() => {
+          setShowDeleteConfirm(false);
+          setDeleteTargetId(null);
+        }}
+        isDangerous={true}
+      />
     </div>
   );
 };

@@ -10,6 +10,11 @@
   width: 100vw;
   background: #f8fafc;
   overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+:root.dark-mode .page-container {
+  background: #0f172a;
 }
 
 .content {
@@ -17,6 +22,11 @@
   padding: 2.5rem 3rem;
   overflow-y: auto;
   background: #f8fafc;
+  transition: background 0.3s ease;
+}
+
+:root.dark-mode .content {
+  background: #0f172a;
 }
 
 .content h2 {
@@ -24,6 +34,11 @@
   color: #1e293b;
   font-size: 32px;
   font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .content h2 {
+  color: #e2e8f0;
 }
 
 /* Form Card */
@@ -35,6 +50,13 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   margin-bottom: 3rem;
   border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+:root.dark-mode .form-card {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .form-group {
@@ -48,6 +70,11 @@
   color: #334155;
   font-size: 15px;
   letter-spacing: 0.3px;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .form-group label {
+  color: #cbd5e1;
 }
 
 .input-field {
@@ -63,11 +90,22 @@
   font-family: inherit;
 }
 
+:root.dark-mode .input-field {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
 .input-field:focus {
   outline: none;
   border-color: #10b981;
   box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
   background: white;
+}
+
+:root.dark-mode .input-field:focus {
+  background: #1e293b;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
 }
 
 .category-row {
@@ -130,10 +168,22 @@
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+:root.dark-mode .table {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .table thead {
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  transition: background 0.3s ease;
+}
+
+:root.dark-mode .table thead {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
 .table th {
@@ -145,6 +195,12 @@
   font-size: 14px;
   letter-spacing: 0.3px;
   text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+:root.dark-mode .table th {
+  color: #cbd5e1;
+  border-bottom-color: #334155;
 }
 
 .table td {
@@ -152,6 +208,12 @@
   padding: 1.25rem 1.5rem;
   color: #475569;
   font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+:root.dark-mode .table td {
+  color: #cbd5e1;
+  border-bottom-color: #334155;
 }
 
 .table tbody tr {
@@ -160,6 +222,11 @@
 
 .table tbody tr:hover {
   background: #f8fafc;
+}
+
+:root.dark-mode .table tbody tr:hover {
+  background: #0f172a;
+}
 }
 
 .table tbody tr:last-child td {
