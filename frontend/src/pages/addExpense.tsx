@@ -1,0 +1,197 @@
+import React, { useState } from "react";
+import Navbar from "../components/sidebar";
+import { useExpense } from "../hooks/useFinance";
+import "./AddIncome.css"; // Reusing same styling
+
+const AddExpense: React.FC = () => {
+  const { expenses, loading, error, addExpense, deleteExpense } = useExpense();
+
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("Food");
+  const [categories, setCategories] = useState([
+    "Food",
+    "Transport",
+    "Shopping",
+    "Bills",
+  ]);
+
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [newCategory, setNewCategory] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!amount || !date) return;
+
+    setSubmitting(true);
+    try {
+      await addExpense(Number(amount), category, date, description);
+      setAmount("");
+      setDate("");
+      setDescription("");
+    } catch (err) {
+      console.error("Failed to add expense:", err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleAddCategory = () => {
+    if (!newCategory) return;
+
+    setCategories([...categories, newCategory]);
+    setCategory(newCategory);
+    setNewCategory("");
+    setShowPopup(false);
+  };
+
+  return (
+    <div className="page-container">
+      <Navbar />
+
+      <div className="content">
+        <h2>Add Expense</h2>
+
+        {/* FORM */}
+        <form className="form-card" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Amount</label>
+            <input
+              className="input-field"
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Category</label>
+
+            <div className="category-row">
+              <select
+                className="input-field"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                {categories.map((cat) => (
+                  <option key={cat}>{cat}</option>
+                ))}
+              </select>
+
+              <button
+                type="button"
+                className="new-btn"
+                onClick={() => setShowPopup(true)}
+              >
+                New
+              </button>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Date</label>
+            <input
+              className="input-field"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Description (optional)</label>
+            <textarea
+              className="input-field"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <button className="submit-btn" disabled={submitting}>
+            {submitting ? "Adding..." : "Add Expense"}
+          </button>
+        </form>
+
+        {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
+
+        {/* TABLE */}
+        <div style={{ marginTop: "40px" }}>
+          <h3>Expense Records</h3>
+
+          {loading ? (
+            <p>Loading expenses...</p>
+          ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {expenses.map((item: any) => (
+                  <tr key={item._id}>
+                    <td>Rs {item.amount}</td>
+                    <td>{item.category}</td>
+                    <td>{new Date(item.date).toLocaleDateString()}</td>
+                    <td>{item.description || "-"}</td>
+                    <td>
+                      <button
+                        className="cancel-btn"
+                        onClick={() => deleteExpense(item._id)}
+                        style={{ padding: "5px 10px", fontSize: "12px" }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </div>
+
+      {/* POPUP */}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <h3>New Category</h3>
+
+            <input
+              className="input-field"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              placeholder="Enter category"
+            />
+
+            <div className="popup-buttons">
+              <button className="submit-btn" onClick={handleAddCategory}>
+                Add
+              </button>
+
+              <button
+                className="cancel-btn"
+                onClick={() => setShowPopup(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AddExpense;

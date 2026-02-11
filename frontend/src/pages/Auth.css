@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  height: 100vh;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 50px 35px;
+  width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(200, 200, 200, 0.3);
+  transition: all 0.3s ease;
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tabs button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: #e2e8f0;
+  color: #475569;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.tabs button.active {
+  background: #6366f1;
+  color: white;
+}
+
+.form-wrapper {
+  position: relative;
+  min-height: 200px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 10;
+  pointer-events: all;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.form input {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+.form input::placeholder {
+  color: #94a3b8;
+}
+
+.form button {
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #6366f1;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.form button:hover {
+  background: #4f46e5;
+}
