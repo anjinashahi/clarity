@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authAPI } from "../services/api";
+import EyeIcon from "../components/EyeIcon";
 import "./Auth.css";
 
 const Auth = () => {
@@ -102,7 +103,7 @@ const Auth = () => {
                 onClick={() => setShowLoginPassword(!showLoginPassword)}
                 title={showLoginPassword ? "Hide password" : "Show password"}
               >
-                {showLoginPassword ? "👁️" : "👁️‍🗨️"}
+                <EyeIcon isVisible={showLoginPassword} size={16} />
               </button>
             </div>
             <button type="submit" disabled={loading}>
@@ -142,7 +143,7 @@ const Auth = () => {
                 onClick={() => setShowRegisterPassword(!showRegisterPassword)}
                 title={showRegisterPassword ? "Hide password" : "Show password"}
               >
-                {showRegisterPassword ? "👁️" : "👁️‍🗨️"}
+                <EyeIcon isVisible={showRegisterPassword} size={16} />
               </button>
             </div>
             <button type="submit" disabled={loading}>

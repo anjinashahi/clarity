@@ -63,6 +63,10 @@ export const authAPI = {
     apiCall<AuthResponse>("/auth/register", "POST", { name, email, password }),
   login: (email: string, password: string): Promise<AuthResponse> =>
     apiCall<AuthResponse>("/auth/login", "POST", { email, password }),
+  forgotPassword: (email: string): Promise<any> =>
+    apiCall("/auth/forgot-password", "POST", { email }),
+  resetPassword: (resetToken: string, newPassword: string): Promise<any> =>
+    apiCall("/auth/reset-password", "POST", { resetToken, newPassword }),
 };
 
 // Expense APIs

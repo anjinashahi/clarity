@@ -1,4 +1,4 @@
-import { Bar, Line } from "react-chartjs-2";
+import { Bar, Line, Pie } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
@@ -7,6 +7,7 @@ import {
   BarElement,
   PointElement,
   LineElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
@@ -22,6 +23,7 @@ ChartJS.register(
   BarElement,
   PointElement,
   LineElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend
@@ -88,6 +90,31 @@ const Dashboard = () => {
   const expenseData = months.map((month) => monthlyData[month].expenses);
   const incomeData = months.map((month) => monthlyData[month].income);
 
+  // Group expenses by category
+  const expensesByCategory: { [key: string]: number } = {};
+  expenses.forEach((expense: any) => {
+    const category = expense.category || "Uncategorized";
+    expensesByCategory[category] = (expensesByCategory[category] || 0) + expense.amount;
+  });
+
+  const categoryLabels = Object.keys(expensesByCategory);
+  const categoryValues = Object.values(expensesByCategory);
+
+  // Color palette for pie chart
+  const categoryColors = [
+    "#ef4444", // red
+    "#f97316", // orange
+    "#eab308", // yellow
+    "#22c55e", // green
+    "#06b6d4", // cyan
+    "#0ea5e9", // sky
+    "#6366f1", // indigo
+    "#a855f7", // purple
+    "#ec4899", // pink
+  ];
+
+  const pieChartColors = categoryColors.slice(0, categoryLabels.length);
+
   return (
     <div className="dashboard-container">
       <Sidebar />
@@ -130,6 +157,36 @@ const Dashboard = () => {
               }}
               options={{ responsive: true }}
             />
+          </div>
+
+          <div className="chart-card pie-chart-card">
+            <h3>Expenses by Category</h3>
+            {categoryLabels.length > 0 ? (
+              <Pie
+                data={{
+                  labels: categoryLabels,
+                  datasets: [
+                    {
+                      data: categoryValues,
+                      backgroundColor: pieChartColors,
+                      borderColor: "#ffffff",
+                      borderWidth: 2,
+                    },
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: true,
+                  plugins: {
+                    legend: {
+                      position: "bottom",
+                    },
+                  },
+                }}
+              />
+            ) : (
+              <p style={{ textAlign: "center", color: "#999" }}>No expense data available</p>
+            )}
           </div>
         </div>
       </main>

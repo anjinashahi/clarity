@@ -128,3 +128,111 @@
   background: #dc2626;
   transform: translateY(-1px);
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+    padding: 1.5rem 0.75rem;
+  }
+
+  .sidebar-title {
+    font-size: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar li {
+    padding: 10px 0;
+  }
+
+  .sidebar li a {
+    font-size: 14px;
+    padding: 0 0.5rem;
+  }
+
+  .user-greeting {
+    font-size: 13px;
+    margin-bottom: 1.5rem;
+  }
+
+  .user-greeting h3 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .sidebar-title {
+    display: none;
+  }
+
+  .user-greeting {
+    display: none;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    flex: 1;
+  }
+
+  .sidebar li {
+    flex: 1;
+    padding: 0;
+    border-radius: 0;
+    border-bottom: 3px solid transparent;
+  }
+
+  .sidebar li.active,
+  .sidebar li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom-color: #10b981;
+  }
+
+  .sidebar li a {
+    padding: 1rem 0.5rem;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .sidebar-footer {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .theme-toggle-btn,
+  .logout-btn {
+    flex: 1;
+    height: 45px;
+    font-size: 12px;
+  }
+
+  .theme-toggle-btn {
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar li a {
+    font-size: 11px;
+    padding: 0.75rem 0.25rem;
+  }
+
+  .theme-toggle-btn,
+  .logout-btn {
+    height: 40px;
+    font-size: 11px;
+    padding: 0 8px;
+  }
+}

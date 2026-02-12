@@ -332,53 +332,176 @@
 }
 
 /* Responsive design */
+@media (max-width: 1024px) {
+  .history-tabs {
+    padding: 1.5rem 2rem;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 15px;
+  }
+
+  .history-container {
+    padding: 2rem;
+  }
+
+  .filters {
+    gap: 1rem;
+  }
+
+  .filter-group {
+    min-width: auto;
+  }
+
+  .table-container {
+    padding: 1.5rem;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 1rem 0.75rem;
+  }
+}
+
 @media (max-width: 768px) {
   .history-tabs {
     gap: 0.5rem;
+    padding: 1rem 1rem;
   }
 
   .tab-btn {
     padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+    font-size: 13px;
+  }
+
+  .history-container {
+    padding: 1rem;
   }
 
   .filters {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0.75rem;
+    padding: 0.75rem;
   }
 
   .filter-group {
     min-width: 100%;
   }
 
+  .filter-group label {
+    font-size: 13px;
+  }
+
   .filter-select,
   .filter-input {
     width: 100%;
+    font-size: 13px;
+    padding: 8px 10px;
   }
 
   .reset-btn {
     width: 100%;
+    padding: 8px 12px;
+    font-size: 13px;
   }
 
   .table-container {
     padding: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .table-container h3 {
+    font-size: 16px;
   }
 
   .history-table th,
   .history-table td {
     padding: 0.75rem 0.5rem;
-    font-size: 0.9rem;
+    font-size: 12px;
+  }
+
+  .history-table th {
+    font-size: 11px;
   }
 
   .category-badge {
     padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
+    font-size: 11px;
   }
 
   .amount {
-    font-size: 1rem;
+    font-size: 13px;
+  }
+
+  .description {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-tabs {
+    gap: 0.25rem;
+    padding: 0.75rem;
+  }
+
+  .tab-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 12px;
+  }
+
+  .history-container {
+    padding: 0.75rem;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .filter-group label {
+    font-size: 12px;
+  }
+
+  .filter-select,
+  .filter-input {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .reset-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .table-container {
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 0.5rem 0.25rem;
+    font-size: 10px;
+  }
+
+  .category-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 9px;
+  }
+
+  .amount {
+    font-size: 11px;
+  }
+
+  .description {
+    max-width: 100px;
+    font-size: 10px;
   }
 }

@@ -205,7 +205,7 @@ const AddIncome: React.FC = () => {
         {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
 
         {/* TABLE */}
-        <div style={{ marginTop: "40px" }}>
+        <div className="table-wrapper">
           <h3>Income Records</h3>
 
           {loading ? (

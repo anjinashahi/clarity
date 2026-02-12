@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import AddIncome from "./pages/addIncome";
 import AddExpense from "./pages/addExpense";
 import History from "./pages/History";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -18,10 +19,38 @@ function App() {
           <IncomeProvider>
             <Routes>
               <Route path="/" element={<Auth />} />          
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/add-income" element = {<AddIncome />} />
-              <Route path="/add-expense" element = {<AddExpense />} />
-              <Route path="/history" element={<History />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/add-income"
+                element={
+                  <ProtectedRoute>
+                    <AddIncome />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/add-expense"
+                element={
+                  <ProtectedRoute>
+                    <AddExpense />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/history"
+                element={
+                  <ProtectedRoute>
+                    <History />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </IncomeProvider>
         </ExpenseProvider>

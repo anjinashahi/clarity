@@ -11,7 +11,7 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   height: 100vh;
   overflow: hidden;
-  transition: background 0.3s ease;
+  transition:  0.3s ease;
 }
 
 :root.dark-mode body {
@@ -64,7 +64,7 @@ body {
 :root.dark-mode .auth-title {
   color: #e2e8f0;
 }
-}
+
 
 .tabs {
   display: flex;
@@ -175,16 +175,17 @@ body {
 
 .password-toggle {
   position: absolute;
-  right: 12px;
+  right: 8px;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
-  padding: 8px 12px;
+  font-size: 14px;
+  padding: 6px 8px;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   color: #94a3b8;
 }
 
@@ -194,7 +195,7 @@ body {
 
 .password-toggle:hover {
   color: #667eea;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 :root.dark-mode .password-toggle:hover {
@@ -225,4 +226,89 @@ body {
 
 .form button:active {
   transform: translateY(0);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 20px;
+  }
+
+  .auth-card {
+    padding: 40px 24px;
+    max-width: 100%;
+  }
+
+  .auth-title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .tabs {
+    margin-bottom: 24px;
+  }
+
+  .tabs button {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  .form {
+    gap: 14px;
+  }
+
+  .form input {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .form button {
+    padding: 12px;
+    font-size: 15px;
+    margin-top: 4px;
+  }
+
+  .password-field {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 32px 16px;
+    border-radius: 16px;
+  }
+
+  .auth-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .tabs {
+    margin-bottom: 20px;
+  }
+
+  .tabs button {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .form {
+    gap: 12px;
+  }
+
+  .form input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .password-toggle {
+    right: 6px;
+    padding: 4px 6px;
+  }
+
+  .form button {
+    padding: 10px;
+    font-size: 14px;
+  }
 }

@@ -33,7 +33,7 @@ exports.updateIncome = async(req, res) =>{
         const income = await Income.findOneAndUpdate(
             {_id: req.params.id, user: req.user.userId},
             req.body,
-            {new: true}
+            {returnDocument: 'after'}
         );
         if(!income) return res.status(404).json({ message: "Income not found" });
         res.json(income);

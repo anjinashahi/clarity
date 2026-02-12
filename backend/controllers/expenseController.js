@@ -33,7 +33,7 @@ exports.updateExpense = async (req, res) => {
     const expense = await Expense.findOneAndUpdate(
       { _id: req.params.id, user: req.user.userId },
       req.body,
-      { new: true }
+      { returnDocument: 'after' }
     );
     if (!expense) return res.status(404).json({ msg: "Expense not found" });
     res.json(expense);
