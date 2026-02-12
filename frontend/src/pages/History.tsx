@@ -95,9 +95,10 @@ const History = () => {
       <div className="content">
         <h2>Transaction History</h2>
 
-        <button onClick={exportCSV}>
+       <button className="export-btn" onClick={exportCSV}>
             Export CSV
         </button>
+
 
 
         {/* Tabs */}

@@ -90,6 +90,8 @@
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
+
+
 .reset-btn {
   padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
@@ -504,4 +506,25 @@
     max-width: 100px;
     font-size: 10px;
   }
+  .export-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.export-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+ :root.dark-mode .export-btn {
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
 }
