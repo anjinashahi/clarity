@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../components/sidebar";
+import Navbar from "../components/Sidebar";
 import { useExpense } from "../hooks/useFinance";
 import ConfirmModal from "../components/ConfirmModal";
 import "./AddIncome.css"; // Reusing same styling

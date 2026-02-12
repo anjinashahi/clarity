@@ -6,7 +6,7 @@ import { IncomeProvider } from "./context/IncomeContext";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
-import AddIncome from "./pages/addIncome";
+import AddIncome from "./pages/AddIncome";
 import AddExpense from "./pages/addExpense";
 import History from "./pages/History";
 import ProtectedRoute from "./components/ProtectedRoute";
