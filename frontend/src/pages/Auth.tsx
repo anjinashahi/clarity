@@ -28,6 +28,7 @@ const Auth = () => {
     try {
       const response = await authAPI.login(loginEmail, loginPassword);
       localStorage.setItem("token", response.token);
+      localStorage.setItem("userName", response.name);
       navigate("/dashboard");
     } catch (err: any) {
       setError(err.message || "Login failed");
@@ -44,6 +45,7 @@ const Auth = () => {
     try {
       const response = await authAPI.register(registerName, registerEmail, registerPassword);
       localStorage.setItem("token", response.token);
+      localStorage.setItem("userName", response.name);
       navigate("/dashboard");
     } catch (err: any) {
       setError(err.message || "Registration failed");

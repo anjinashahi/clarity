@@ -29,6 +29,10 @@ const AddIncome: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
+  // Inline editing states
+  const [inlineEditingId, setInlineEditingId] = useState<string | null>(null);
+  const [inlineEditData, setInlineEditData] = useState<any>(null);
+
   // Confirmation modal states
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
@@ -70,6 +74,39 @@ const AddIncome: React.FC = () => {
     setDate("");
     setDescription("");
     setCategory("Salary");
+  };
+
+  const handleInlineEdit = (income: any) => {
+    setInlineEditingId(income._id);
+    setInlineEditData({
+      amount: income.amount,
+      category: income.category,
+      date: income.date.split("T")[0],
+      description: income.description || "",
+    });
+  };
+
+  const handleInlineCancel = () => {
+    setInlineEditingId(null);
+    setInlineEditData(null);
+  };
+
+  const handleInlineSave = async () => {
+    if (!inlineEditingId || !inlineEditData || !inlineEditData.amount || !inlineEditData.date) return;
+
+    try {
+      await updateIncome(
+        inlineEditingId,
+        Number(inlineEditData.amount),
+        inlineEditData.category,
+        inlineEditData.date,
+        inlineEditData.description
+      );
+      setInlineEditingId(null);
+      setInlineEditData(null);
+    } catch (err) {
+      console.error("Failed to save income:", err);
+    }
   };
 
   const handleAddCategory = () => {
@@ -188,29 +225,111 @@ const AddIncome: React.FC = () => {
               <tbody>
                 {incomes.map((item: any) => (
                   <tr key={item._id}>
-                    <td>Rs {item.amount}</td>
-                    <td>{item.category}</td>
-                    <td>{new Date(item.date).toLocaleDateString()}</td>
-                    <td>{item.description || "-"}</td>
-                    <td>
-                      <button
-                        className="submit-btn"
-                        onClick={() => handleEdit(item)}
-                        style={{ padding: "5px 10px", fontSize: "12px", marginRight: "5px" }}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="cancel-btn"
-                        onClick={() => {
-                          setDeleteTargetId(item._id);
-                          setShowDeleteConfirm(true);
-                        }}
-                        style={{ padding: "5px 10px", fontSize: "12px" }}
-                      >
-                        Delete
-                      </button>
-                    </td>
+                    {inlineEditingId === item._id ? (
+                      <>
+                        <td>
+                          <input
+                            className="input-field"
+                            type="number"
+                            value={inlineEditData.amount}
+                            onChange={(e) =>
+                              setInlineEditData({
+                                ...inlineEditData,
+                                amount: e.target.value,
+                              })
+                            }
+                            style={{ padding: "6px", fontSize: "14px" }}
+                          />
+                        </td>
+                        <td>
+                          <select
+                            className="input-field"
+                            value={inlineEditData.category}
+                            onChange={(e) =>
+                              setInlineEditData({
+                                ...inlineEditData,
+                                category: e.target.value,
+                              })
+                            }
+                            style={{ padding: "6px", fontSize: "14px" }}
+                          >
+                            {categories.map((cat) => (
+                              <option key={cat}>{cat}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          <input
+                            className="input-field"
+                            type="date"
+                            value={inlineEditData.date}
+                            onChange={(e) =>
+                              setInlineEditData({
+                                ...inlineEditData,
+                                date: e.target.value,
+                              })
+                            }
+                            style={{ padding: "6px", fontSize: "14px" }}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            className="input-field"
+                            type="text"
+                            value={inlineEditData.description}
+                            onChange={(e) =>
+                              setInlineEditData({
+                                ...inlineEditData,
+                                description: e.target.value,
+                              })
+                            }
+                            style={{ padding: "6px", fontSize: "14px" }}
+                          />
+                        </td>
+                        <td>
+                          <button
+                            className="submit-btn"
+                            onClick={handleInlineSave}
+                            style={{ padding: "5px 10px", fontSize: "12px", marginRight: "5px" }}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="cancel-btn"
+                            onClick={handleInlineCancel}
+                            style={{ padding: "5px 10px", fontSize: "12px" }}
+                          >
+                            Cancel
+                          </button>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>Rs {item.amount}</td>
+                        <td>{item.category}</td>
+                        <td>{new Date(item.date).toLocaleDateString()}</td>
+                        <td>{item.description || "-"}</td>
+                        <td>
+                          <button
+                            className="submit-btn"
+                            onClick={() => handleInlineEdit(item)}
+                            style={{ padding: "5px 10px", fontSize: "12px", marginRight: "5px" }}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="cancel-btn"
+                            onClick={() => {
+                              setDeleteTargetId(item._id);
+                              setShowDeleteConfirm(true);
+                            }}
+                            style={{ padding: "5px 10px", fontSize: "12px" }}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>

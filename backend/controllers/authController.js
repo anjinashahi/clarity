@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.status(201).json({ token });
+    res.status(201).json({ token, name: user.name });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -39,7 +39,7 @@ exports.login = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.json({ token });
+    res.json({ token, name: user.name });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");

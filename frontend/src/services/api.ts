@@ -54,6 +54,7 @@ const apiCall = async <T = any>(
 // Auth response type
 interface AuthResponse {
   token: string;
+  name: string;
 }
 
 // Auth APIs
@@ -83,3 +84,14 @@ export const incomeAPI = {
     apiCall(`/incomes/${id}`, "PUT", { amount, category, date, description }),
   delete: (id: string): Promise<any> => apiCall(`/incomes/${id}`, "DELETE"),
 };
+// Recurring Expense APIs (disabled)
+/*
+export const recurringExpenseAPI = {
+  add: (amount: number, category: string, frequency: string, startDate: string, description?: string): Promise<any> =>
+    apiCall("/recurring-expenses", "POST", { amount, category, frequency, startDate, description }),
+  getAll: (): Promise<any[]> => apiCall("/recurring-expenses", "GET"),
+  update: (id: string, amount: number, category: string, frequency: string, startDate: string, description?: string, isActive?: boolean): Promise<any> =>
+    apiCall(`/recurring-expenses/${id}`, "PUT", { amount, category, frequency, startDate, description, isActive }),
+  delete: (id: string): Promise<any> => apiCall(`/recurring-expenses/${id}`, "DELETE"),
+};
+*/

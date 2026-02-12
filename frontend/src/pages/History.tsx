@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import { useExpense } from "../hooks/useFinance";
 import { useIncome } from "../hooks/useFinance";
 import "./History.css";
+import Papa from "papaparse";
 
 const History = () => {
   const { expenses, loading: expenseLoading, error: expenseError } = useExpense();
@@ -55,12 +56,49 @@ const History = () => {
     return matchesCategory && matchesStartDate && matchesEndDate;
   });
 
+ const exportCSV = () => {
+
+  const combinedData = [
+    ...expenses.map(e => ({
+      Type: "Expense",
+      Amount: e.amount,
+      Category: e.category,
+      Date: new Date(e.date).toLocaleDateString(),
+      Description: e.description
+    })),
+
+    ...incomes.map(i => ({
+      Type: "Income",
+      Amount: i.amount,
+      Category: i.category,
+      Date: new Date(i.date).toLocaleDateString(),
+      Description: i.description
+    }))
+  ];
+
+  const csv = Papa.unparse(combinedData);
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "transactions.csv";
+
+  link.click();
+};
+
+
   return (
     <div className="page-container">
       <Sidebar />
 
       <div className="content">
         <h2>Transaction History</h2>
+
+        <button onClick={exportCSV}>
+            Export CSV
+        </button>
+
 
         {/* Tabs */}
         <div className="history-tabs">
